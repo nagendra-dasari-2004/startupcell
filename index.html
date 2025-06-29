@@ -1,0 +1,1450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Startup Cell - Sathyabama University</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            background: #f8f9ff;
+            color: #333;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 2rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        nav.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #4285f4;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #4285f4, #667eea);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(66, 133, 244, 0.3);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #4285f4;
+            transform: translateY(-2px);
+        }
+
+        .nav-links a.active {
+            color: #4285f4;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #4285f4;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .mobile-toggle {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Sections */
+        .section {
+            min-height: 100vh;
+            padding: 100px 2rem 50px;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Home Section */
+        #home {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding-top: 120px;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .hero-text h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease 0.2s both;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .hero-text h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: rgba(255, 255, 255, 0.9);
+            animation: fadeInUp 1s ease 0.4s both;
+            font-weight: 400;
+        }
+
+        .hero-text p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            animation: fadeInUp 1s ease 0.6s both;
+            max-width: 90%;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            animation: fadeInUp 1s ease 0.8s both;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: white;
+            color: #4285f4;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-visual {
+            position: relative;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .hero-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 2.5rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transform: rotate(-5deg);
+            max-width: 450px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .hero-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .floating-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .floating-element {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: floatRandom 8s ease-in-out infinite;
+        }
+
+        /* About Section */
+        #about {
+            background: #f8f9ff;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-visual {
+            position: relative;
+            height: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        .about-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            max-width: 500px;
+        }
+
+        .about-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 50px;
+            height: 4px;
+            background: #4285f4;
+            border-radius: 2px;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 2rem;
+            max-width: 90%;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #4285f4, #667eea);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: white;
+            font-size: 2rem;
+            box-shadow: 0 5px 15px rgba(66, 133, 244, 0.3);
+        }
+
+        /* Events Section */
+        #events {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .section-title-light {
+            color: white;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .section-title-light::after {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .event-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 2.5rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .event-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .event-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+        }
+
+        .event-date {
+            background: #4285f4;
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            display: inline-block;
+            font-weight: 600;
+        }
+
+        /* Startups Section */
+        #startups {
+            background: #f8f9ff;
+        }
+
+        .center-title {
+            text-align: center;
+        }
+
+        .center-title .section-title::after {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .startups-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .startup-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .startup-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .startup-logo {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: white;
+            font-size: 2.5rem;
+            font-weight: bold;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Collaborations Section */
+        #collaborations {
+            background: white;
+        }
+
+        .collab-content {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .collab-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .collab-card {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .collab-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Funding Section */
+        #funding {
+            background: linear-gradient(135deg, #4285f4 0%, #667eea 100%);
+            color: white;
+        }
+
+        .funding-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .funding-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 2.5rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .funding-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .funding-amount {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #4285f4;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 0.8rem 1.5rem;
+            border-radius: 10px;
+            display: inline-block;
+            margin-bottom: 1.5rem;
+        }
+
+        .funding-features {
+            list-style: none;
+            margin-top: 1.5rem;
+        }
+
+        .funding-features li {
+            padding: 0.8rem 0;
+            position: relative;
+            padding-left: 2.5rem;
+            font-size: 1.1rem;
+        }
+
+        .funding-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #4285f4;
+            background: rgba(255, 255, 255, 0.2);
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        /* Mentors Section */
+        #mentors {
+            background: #f8f9ff;
+        }
+
+        .mentors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .mentor-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .mentor-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .mentor-avatar {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #4285f4, #667eea, #764ba2, #f093fb);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: white;
+            font-size: 3rem;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .mentor-role {
+            color: #4285f4;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: #f0f5ff;
+            border-radius: 50%;
+            color: #4285f4;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: #4285f4;
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        /* Contact Section */
+        #contact {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            margin-top: 3rem;
+        }
+
+        .contact-form {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 2.5rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1.2rem;
+            border: none;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.9);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            background: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact-info {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 2.5rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .contact-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .contact-details h3 {
+            margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+        }
+
+        .map-container {
+            margin-top: 3rem;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            height: 250px;
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Footer */
+        footer {
+            background: #1a1a1a;
+            color: white;
+            padding: 4rem 2rem 1rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1.5rem;
+            color: #4285f4;
+            font-size: 1.5rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: #4285f4;
+        }
+
+        .footer-section p {
+            margin-bottom: 1.5rem;
+            color: #ccc;
+            line-height: 1.8;
+        }
+
+        .footer-section a {
+            color: #ccc;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.8rem;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-section a:hover {
+            color: #4285f4;
+            transform: translateX(5px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid #333;
+            color: #ccc;
+            font-size: 1rem;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .footer-social a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: #2c2c2c;
+            border-radius: 50%;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .footer-social a:hover {
+            background: #4285f4;
+            transform: translateY(-5px);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(-5deg); }
+            50% { transform: translateY(-20px) rotate(-5deg); }
+        }
+
+        @keyframes floatRandom {
+            0%, 100% { transform: translateY(0px) translateX(0px); }
+            25% { transform: translateY(-20px) translateX(10px); }
+            50% { transform: translateY(-10px) translateX(-10px); }
+            75% { transform: translateY(-30px) translateX(5px); }
+        }
+
+        /* Stats Section */
+        .stats-section {
+            background: white;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .stat-card {
+            background: #f0f5ff;
+            padding: 2.5rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px);
+            background: #e4edff;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-number {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: #4285f4;
+            margin-bottom: 1rem;
+        }
+
+        .stat-label {
+            font-size: 1.2rem;
+            color: #666;
+            font-weight: 600;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .hero-text h1 {
+                font-size: 2.8rem;
+            }
+            
+            .hero-text h2 {
+                font-size: 1.8rem;
+            }
+            
+            .section-title {
+                font-size: 2.2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-toggle {
+                display: block;
+            }
+
+            .hero-content,
+            .about-grid,
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-text h1 {
+                font-size: 2.5rem;
+                text-align: center;
+            }
+
+            .hero-text h2 {
+                text-align: center;
+            }
+
+            .hero-text p {
+                text-align: center;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .cta-buttons {
+                justify-content: center;
+            }
+
+            .section {
+                padding: 80px 1rem 30px;
+            }
+
+            .center-title .section-title {
+                text-align: center;
+            }
+
+            .section-title::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+            .hero-card {
+                transform: rotate(0);
+                max-width: 100%;
+                margin-top: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .cta-buttons {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+            
+            .hero-text h1 {
+                font-size: 2rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <div class="logo-icon">SC</div>
+                <span>Startup Cell</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home" class="active">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#events">Events</a></li>
+                <li><a href="#startups">Our Startups</a></li>
+                <li><a href="#collaborations">Collaborations</a></li>
+                <li><a href="#funding">Funding</a></li>
+                <li><a href="#mentors">Mentors</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="mobile-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Home Section -->
+    <section id="home" class="section visible">
+        <div class="floating-elements">
+            <div class="floating-element" style="top: 10%; left: 10%; width: 20px; height: 20px; animation-delay: 0s;"></div>
+            <div class="floating-element" style="top: 20%; right: 15%; width: 30px; height: 30px; animation-delay: 2s;"></div>
+            <div class="floating-element" style="bottom: 30%; left: 20%; width: 25px; height: 25px; animation-delay: 4s;"></div>
+            <div class="floating-element" style="bottom: 10%; right: 10%; width: 35px; height: 35px; animation-delay: 6s;"></div>
+        </div>
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>Ignite Your Innovation Journey</h1>
+                    <h2>Sathyabama Startup Cell</h2>
+                    <p>Empowering students to transform ideas into successful ventures through mentorship, resources, and industry connections. Join our thriving entrepreneurial ecosystem and turn your dreams into reality.</p>
+                    <div class="cta-buttons">
+                        <a href="#about" class="btn btn-primary">Learn More</a>
+                        <a href="#contact" class="btn btn-secondary">Contact Us</a>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="hero-card">
+                        <h3><i class="fas fa-lightbulb"></i> Innovation Hub</h3>
+                        <p>Where ideas become reality. We provide the platform, resources, and mentorship to transform your entrepreneurial vision into a successful venture.</p>
+                        <div style="display: flex; gap: 10px; margin-top: 1.5rem;">
+                            <div style="width: 15px; height: 15px; background: #4285f4; border-radius: 50%;"></div>
+                            <div style="width: 15px; height: 15px; background: #34a853; border-radius: 50%;"></div>
+                            <div style="width: 15px; height: 15px; background: #fbbc05; border-radius: 50%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">50+</div>
+                <div class="stat-label">Startups Supported</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">₹5.2Cr</div>
+                <div class="stat-label">Funding Raised</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">120+</div>
+                <div class="stat-label">Events Organized</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">35+</div>
+                <div class="stat-label">Industry Partners</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-visual">
+                    <div class="about-card">
+                        <h3><i class="fas fa-rocket"></i> Who We Are</h3>
+                        <p>The Startup Cell at Sathyabama University is a dynamic innovation hub dedicated to fostering entrepreneurship among students. We provide a supportive ecosystem where creative ideas are nurtured into viable business ventures through mentorship, funding access, and state-of-the-art facilities.</p>
+                    </div>
+                </div>
+                <div>
+                    <h2 class="section-title">About Startup Cell</h2>
+                    <p class="section-subtitle">We are committed to creating the next generation of successful entrepreneurs by providing comprehensive support, from ideation to market launch.</p>
+                    <p>Our mission is to cultivate an entrepreneurial mindset among students, enabling them to solve real-world problems through innovation. We bridge the gap between academia and industry, providing resources, mentorship, and networking opportunities.</p>
+                </div>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-lightbulb"></i></div>
+                    <h3>Ideation Support</h3>
+                    <p>We help students refine their ideas through workshops and brainstorming sessions, turning concepts into actionable business plans.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-users"></i></div>
+                    <h3>Mentorship</h3>
+                    <p>Connect with industry experts who provide guidance and share their experiences to help you navigate the entrepreneurial journey.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-hand-holding-usd"></i></div>
+                    <h3>Funding Access</h3>
+                    <p>We help startups connect with potential investors and funding opportunities to scale their innovative solutions.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Events Section -->
+    <section id="events" class="section">
+        <div class="container">
+            <h2 class="section-title section-title-light">Our Events</h2>
+            <p style="text-align: center; margin-bottom: 2rem;">Discover the exciting events organized by Sathyabama Startup Cell to foster innovation and entrepreneurship.</p>
+            
+            <div class="events-grid">
+                <div class="event-card">
+                    <div class="event-icon"><i class="fas fa-rocket"></i></div>
+                    <div class="event-date">May 15-17, 2023</div>
+                    <h3>Startup Weekend</h3>
+                    <p>A 54-hour event where students form teams, validate ideas, and build prototypes to pitch to judges and investors. Winners receive seed funding and incubation support.</p>
+                    <a href="#" class="btn btn-primary" style="margin-top: 1.5rem;">View Details →</a>
+                </div>
+                <div class="event-card">
+                    <div class="event-icon"><i class="fas fa-chalkboard-teacher"></i></div>
+                    <div class="event-date">April 8, 2023</div>
+                    <h3>Entrepreneurship Workshop</h3>
+                    <p>Interactive sessions with successful entrepreneurs sharing insights on building sustainable businesses. Learn about market research, business models, and growth strategies.</p>
+                    <a href="#" class="btn btn-primary" style="margin-top: 1.5rem;">View Details →</a>
+                </div>
+                <div class="event-card">
+                    <div class="event-icon"><i class="fas fa-trophy"></i></div>
+                    <div class="event-date">March 22, 2023</div>
+                    <h3>Pitch Competition</h3>
+                    <p>Students pitch their startup ideas to a panel of judges for feedback and a chance to win seed funding. Top 3 teams receive mentorship and incubation support.</p>
+                    <a href="#" class="btn btn-primary" style="margin-top: 1.5rem;">View Details →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Startups Section -->
+    <section id="startups" class="section">
+        <div class="container">
+            <div class="center-title">
+                <h2 class="section-title">Our Startups</h2>
+            </div>
+            <p style="text-align: center; margin-bottom: 2rem;">Meet the innovative startups that have emerged from Sathyabama University's entrepreneurial ecosystem.</p>
+            
+            <div class="startups-grid">
+                <div class="startup-card">
+                    <div class="startup-logo" style="background: linear-gradient(135deg, #4285f4, #667eea);"><i class="fas fa-robot"></i></div>
+                    <h3>TechNova Solutions</h3>
+                    <p>Founded in 2021 by Computer Science students, TechNova has secured ₹2M in seed funding and specializes in AI-powered solutions for businesses.</p>
+                    <a href="#" class="btn btn-primary" style="margin-top: 1.5rem;">Learn More →</a>
+                </div>
+                <div class="startup-card">
+                    <div class="startup-logo" style="background: linear-gradient(135deg, #34a853, #137333);"><i class="fas fa-leaf"></i></div>
+                    <h3>EcoGreen Energy</h3>
+                    <p>Founded by Electrical Engineering students, EcoGreen has won multiple sustainability awards for their innovative renewable energy solutions.</p>
+                    <a href="#" class="btn btn-primary" style="margin-top: 1.5rem;">Learn More →</a>
+                </div>
+                <div class="startup-card">
+                    <div class="startup-logo" style="background: linear-gradient(135deg, #ea4335, #d33b2c);"><i class="fas fa-heartbeat"></i></div>
+                    <h3>MediConnect</h3>
+                    <p>Founded by Biomedical Engineering graduates, MediConnect has partnered with 15+ hospitals to revolutionize healthcare accessibility.</p>
+                    <a href="#" class="btn btn-primary" style="margin-top: 1.5rem;">Learn More →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Collaborations Section -->
+    <section id="collaborations" class="section">
+        <div class="container">
+            <div class="collab-content">
+                <h2 class="section-title">Our Collaborations</h2>
+                <p>We partner with industry leaders and organizations to provide the best resources for our startups.</p>
+            </div>
+            
+            <div class="collab-types">
+                <div class="collab-card">
+                    <div class="feature-icon"><i class="fas fa-handshake"></i></div>
+                    <h3>Mentorship</h3>
+                    <p>Provide expert guidance to student entrepreneurs</p>
+                    <div class="collab-logos" style="margin-top: 1.5rem;">
+                        <p style="font-size: 0.9rem;">Partners: Google, Microsoft, IBM</p>
+                    </div>
+                </div>
+                <div class="collab-card">
+                    <div class="feature-icon"><i class="fas fa-money-bill-wave"></i></div>
+                    <h3>Funding</h3>
+                    <p>Support promising startups with capital</p>
+                    <div class="collab-logos" style="margin-top: 1.5rem;">
+                        <p style="font-size: 0.9rem;">Partners: Sequoia, Accel, AngelList</p>
+                    </div>
+                </div>
+                <div class="collab-card">
+                    <div class="feature-icon"><i class="fas fa-tools"></i></div>
+                    <h3>Resources</h3>
+                    <p>Provide technical tools and resources</p>
+                    <div class="collab-logos" style="margin-top: 1.5rem;">
+                        <p style="font-size: 0.9rem;">Partners: AWS, Adobe, GitHub</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Funding Section -->
+    <section id="funding" class="section">
+        <div class="container">
+            <h2 class="section-title section-title-light">Funding Opportunities</h2>
+            <p style="text-align: center; margin-bottom: 2rem;">We provide various funding options to help your startup grow at every stage.</p>
+            
+            <div class="funding-grid">
+                <div class="funding-card">
+                    <h3>Seed Fund</h3>
+                    <div class="funding-amount">Up to ₹10 Lakhs</div>
+                    <p>For early-stage startups with validated ideas and prototypes. Focus on product development and market validation.</p>
+                    <ul class="funding-features">
+                        <li>6-month incubation program</li>
+                        <li>Mentorship from industry experts</li>
+                        <li>Access to co-working space</li>
+                        <li>Legal and IP support</li>
+                    </ul>
+                    <a href="#" class="btn btn-primary" style="margin-top: 1.5rem;">Apply Now →</a>
+                </div>
+                <div class="funding-card">
+                    <h3>Growth Fund</h3>
+                    <div class="funding-amount">Up to ₹50 Lakhs</div>
+                    <p>For startups with proven traction looking to scale operations and expand market reach.</p>
+                    <ul class="funding-features">
+                        <li>12-month acceleration program</li>
+                        <li>Access to investor network</li>
+                        <li>Marketing and sales support</li>
+                        <li>International market access</li>
+                    </ul>
+                    <a href="#" class="btn btn-primary" style="margin-top: 1.5rem;">Apply Now →</a>
+                </div>
+                <div class="funding-card">
+                    <h3>Research Grant</h3>
+                    <div class="funding-amount">Up to ₹25 Lakhs</div>
+                    <p>For deep-tech and research-based startups focusing on innovative solutions.</p>
+                    <ul class="funding-features">
+                        <li>Access to university labs</li>
+                        <li>Technical mentorship</li>
+                        <li>Patent filing support</li>
+                        <li>Industry-academia collaboration</li>
+                    </ul>
+                    <a href="#" class="btn btn-primary" style="margin-top: 1.5rem;">Apply Now →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mentors Section -->
+    <section id="mentors" class="section">
+        <div class="container">
+            <div class="center-title">
+                <h2 class="section-title">Our Mentors</h2>
+            </div>
+            <p style="text-align: center; margin-bottom: 2rem;">Learn from experienced entrepreneurs and industry leaders who guide our startups.</p>
+            
+            <div class="mentors-grid">
+                <div class="mentor-card">
+                    <div class="mentor-avatar"><i class="fas fa-user"></i></div>
+                    <h3>Dr. Rajesh Kumar</h3>
+                    <div class="mentor-role">Tech Entrepreneur</div>
+                    <p>Founder of two successful SaaS startups with exits. Specializes in product strategy and scaling.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+                <div class="mentor-card">
+                    <div class="mentor-avatar"><i class="fas fa-user"></i></div>
+                    <h3>Priya Sharma</h3>
+                    <div class="mentor-role">VC Investor</div>
+                    <p>Partner at VentureCatalyst with 15+ years experience in early-stage investments.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+                <div class="mentor-card">
+                    <div class="mentor-avatar"><i class="fas fa-user"></i></div>
+                    <h3>Sanjay Mehta</h3>
+                    <div class="mentor-role">Marketing Expert</div>
+                    <p>Former CMO at TechMahindra with expertise in go-to-market strategies and branding.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+                <div class="mentor-card">
+                    <div class="mentor-avatar"><i class="fas fa-user"></i></div>
+                    <h3>Ananya Reddy</h3>
+                    <div class="mentor-role">Legal Advisor</div>
+                    <p>Specializes in startup law, IP protection, and fundraising compliance.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section">
+        <div class="container">
+            <h2 class="section-title section-title-light">Contact Us</h2>
+            <p style="text-align: center; margin-bottom: 2rem;">Reach out to us for more information or to get involved with our programs.</p>
+            
+            <div class="contact-grid">
+                <div class="contact-form">
+                    <form>
+                        <div class="form-group">
+                            <label for="name">Full Name</label>
+                            <input type="text" id="name" placeholder="Enter your name">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" placeholder="Enter your email">
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <input type="text" id="subject" placeholder="Enter subject">
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" rows="5" placeholder="Enter your message"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message</button>
+                    </form>
+                </div>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+                        <div class="contact-details">
+                            <h3>Our Location</h3>
+                            <p>Startup Cell, Sathyabama University<br>Jeppiaar Nagar, Rajiv Gandhi Salai,<br>Chennai - 600 119</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon"><i class="fas fa-phone-alt"></i></div>
+                        <div class="contact-details">
+                            <h3>Phone Number</h3>
+                            <p>+91 44 2450 3150<br>+91 98765 43210</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+                        <div class="contact-details">
+                            <h3>Email Address</h3>
+                            <p>startupcell@sathyabama.ac.in<br>support@startupsathyabama.in</p>
+                        </div>
+                    </div>
+                    <div class="map-container">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3887.181558928291!2d80.21947461482258!3d12.999139590821436!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a52679d2f5f6d0f%3A0x1bce0d5d5f5e3e1f!2sSathyabama%20Institute%20of%20Science%20and%20Technology!5e0!3m2!1sen!2sin!4v1656073471875!5m2!1sen!2sin" allowfullscreen="" loading="lazy"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Startup Cell</h3>
+                <p>Empowering the next generation of entrepreneurs at Sathyabama University with resources, mentorship, and funding opportunities.</p>
+                <div class="footer-social">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <a href="#home"><i class="fas fa-chevron-right"></i> Home</a>
+                <a href="#about"><i class="fas fa-chevron-right"></i> About Us</a>
+                <a href="#events"><i class="fas fa-chevron-right"></i> Events</a>
+                <a href="#startups"><i class="fas fa-chevron-right"></i> Our Startups</a>
+                <a href="#funding"><i class="fas fa-chevron-right"></i> Funding</a>
+            </div>
+            <div class="footer-section">
+                <h3>Resources</h3>
+                <a href="#"><i class="fas fa-chevron-right"></i> Startup Toolkit</a>
+                <a href="#"><i class="fas fa-chevron-right"></i> Learning Materials</a>
+                <a href="#"><i class="fas fa-chevron-right"></i> Funding Guide</a>
+                <a href="#"><i class="fas fa-chevron-right"></i> Legal Templates</a>
+                <a href="#"><i class="fas fa-chevron-right"></i> Market Research</a>
+            </div>
+            <div class="footer-section">
+                <h3>Newsletter</h3>
+                <p>Subscribe to our newsletter for the latest updates on events, opportunities, and success stories.</p>
+                <form style="margin-top: 1.5rem;">
+                    <div class="form-group">
+                        <input type="email" placeholder="Your Email Address" style="width: 100%; padding: 0.8rem; border-radius: 5px; border: none;">
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 0.5rem;">Subscribe</button>
+                </form>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 Sathyabama University Startup Cell. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Navigation scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Section reveal on scroll
+        const sections = document.querySelectorAll('.section');
+        const options = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, options);
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+                
+                // Update active link
+                document.querySelectorAll('.nav-links a').forEach(link => {
+                    link.classList.remove('active');
+                });
+                this.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
